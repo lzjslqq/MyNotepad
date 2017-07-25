@@ -10,13 +10,17 @@ import { Component, OnInit, Inject } from '@angular/core';
   selector: 'app-login',
   template: `
     <div>
-      <input required minlength='3'
-      [(ngModel)]='userName' #userNameRef='ngModel' type="text" />{{userNameRef.errors | json}}
-      <div *ngIf='userNameRef.errors?.required'>用户名必填</div>
-      <div *ngIf='userNameRef.errors?.minlength'>用户名至少要三个字符</div>
-      <input required [(ngModel)]='password' #passwordRef='ngModel' type="password" />{{passwordRef.valid}}
-      <div *ngIf='passwordRef.errors?.required'>密码必填</div>
-      <button  (click)='onClick()'>Login</button>
+      <form #formRef='ngForm' (ngSubmit)='onSubmit(formRef.value)'>
+        <fieldset ngModelGroup='login'>
+          <input required minlength='3' name='username'
+          [(ngModel)]='userName' #userNameRef='ngModel' type="text" />{{userNameRef.errors | json}}
+          <div *ngIf='userNameRef.errors?.required'>用户名必填</div>
+          <div *ngIf='userNameRef.errors?.minlength'>用户名至少要三个字符</div>
+          <input required name='password' [(ngModel)]='password' #passwordRef='ngModel' type="password" />{{passwordRef.valid}}
+          <div *ngIf='passwordRef.errors?.required'>密码必填</div>
+          <button type='submit'>Login</button>
+        </fieldset>
+      </form>
     </div>
   `,
   styles: [],
@@ -35,8 +39,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  public onClick() {
+  public onSubmit(formValue) {
     console.log(`username:${this.userName}` + '\n\r' + `password:${this.password}`);
-    console.log(`auth result is ${this.service.loginWithCredentials(this.userName, this.password)}`);
+    console.log(`auth result is ${this.service.loginWithCredentials(formValue.login.username, formValue.login.password)}`);
   }
+
 }
