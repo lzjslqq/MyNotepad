@@ -8,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
   template: `
     <div>
       <input #userNameRef type="text">
-      <button  (click)='onClick(userNameRef.value)'>Login</button>
+      <input #passwordRef type="password">
+      <button  (click)='onClick(userNameRef.value,passwordRef.value)'>Login</button>
     </div>
   `,
   styles: []
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  public onClick(userName: string) {
-    console.log(userName);
+  public onClick(userName: string, password) {
+    console.log(`username:${userName}` + '\n\r' + `password:${password}`);
   }
 }
