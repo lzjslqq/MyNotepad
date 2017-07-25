@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
+
 // import { AuthService } from '../services/auth.service';
 
 // @Component是Angular提供的装饰器函数，用来描述Compoent的元数据
@@ -9,9 +10,9 @@ import { Component, OnInit, Inject } from '@angular/core';
   selector: 'app-login',
   template: `
     <div>
-      <input #userNameRef type="text">
-      <input #passwordRef type="password">
-      <button  (click)='onClick(userNameRef.value,passwordRef.value)'>Login</button>
+      <input [(ngModel)]='userName' type="text" />
+      <input [(ngModel)]='password' type="password" />
+      <button  (click)='onClick()'>Login</button>
     </div>
   `,
   styles: [],
@@ -19,15 +20,19 @@ import { Component, OnInit, Inject } from '@angular/core';
   // providers: [AuthService]
 })
 export class LoginComponent implements OnInit {
+
+  userName = '';
+  password = '';
   // 在构造函数中将AuthService示例注入到成员变量service中
   // 而且我们不需要显式声明成员变量service了
+  // 修饰符Inject('auth')的意思是到系统配置中找到名称为auth的那个依赖注入到修饰的变量中
   constructor( @Inject('auth') private service) { }
 
   ngOnInit() {
   }
 
-  public onClick(userName: string, password) {
-    console.log(`username:${userName}` + '\n\r' + `password:${password}`);
-    console.log(`auth result is ${this.service.loginWithCredentials(userName, password)}`);
+  public onClick() {
+    console.log(`username:${this.userName}` + '\n\r' + `password:${this.password}`);
+    console.log(`auth result is ${this.service.loginWithCredentials(this.userName, this.password)}`);
   }
 }
