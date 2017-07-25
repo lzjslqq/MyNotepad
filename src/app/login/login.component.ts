@@ -10,8 +10,12 @@ import { Component, OnInit, Inject } from '@angular/core';
   selector: 'app-login',
   template: `
     <div>
-      <input [(ngModel)]='userName' type="text" />
-      <input [(ngModel)]='password' type="password" />
+      <input required minlength='3'
+      [(ngModel)]='userName' #userNameRef='ngModel' type="text" />{{userNameRef.errors | json}}
+      <div *ngIf='userNameRef.errors?.required'>用户名必填</div>
+      <div *ngIf='userNameRef.errors?.minlength'>用户名至少要三个字符</div>
+      <input required [(ngModel)]='password' #passwordRef='ngModel' type="password" />{{passwordRef.valid}}
+      <div *ngIf='passwordRef.errors?.required'>密码必填</div>
       <button  (click)='onClick()'>Login</button>
     </div>
   `,
