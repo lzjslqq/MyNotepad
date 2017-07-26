@@ -12,7 +12,8 @@ import { Component, OnInit, Inject } from '@angular/core';
     <div>
       <form #formRef='ngForm' (ngSubmit)='onSubmit(formRef.value)'>
         <fieldset ngModelGroup='login'>
-          <input required minlength='3' name='username'
+          <input required minlength='3' name='userName' class='ng-pristine ng-invalid ng-touched'
+          ng-reflect-minlength='3' ng-reflect-name='userName'
           [(ngModel)]='userName' #userNameRef='ngModel' type="text" />{{userNameRef.errors | json}}
           <div *ngIf='userNameRef.errors?.required'>用户名必填</div>
           <div *ngIf='userNameRef.errors?.minlength'>用户名至少要三个字符</div>
@@ -23,7 +24,7 @@ import { Component, OnInit, Inject } from '@angular/core';
       </form>
     </div>
   `,
-  styles: [],
+  styles: ['input.ng-invalid{ border: 3px solid red;} input.ng-valid{ border: 3px solid green;}'],
   // 在providers中配置AuthService
   // providers: [AuthService]
 })
@@ -41,7 +42,7 @@ export class LoginComponent implements OnInit {
 
   public onSubmit(formValue) {
     console.log(`username:${this.userName}` + '\n\r' + `password:${this.password}`);
-    console.log(`auth result is ${this.service.loginWithCredentials(formValue.login.username, formValue.login.password)}`);
+    console.log(`auth result is ${this.service.loginWithCredentials(formValue.login.userName, formValue.login.password)}`);
   }
 
 }
