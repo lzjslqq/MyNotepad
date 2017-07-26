@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
+import { RouterModule } from '@angular/router';
 
 // @NgModule装饰器用来为模块定义元数据,将AppModule标记为 Angular 模块类（也叫NgModule类）
 @NgModule({
@@ -18,7 +19,11 @@ import { AuthService } from './services/auth.service';
     // BrowserModule提供了运行在浏览器中的应用所需要的关键服务（Service）和指令（Directive）
     // 这个模块所有需要在浏览器中跑的应用都必须引用
     BrowserModule,
-    FormsModule
+    FormsModule,
+    RouterModule.forRoot([
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: 'login', component: LoginComponent }
+    ])
   ],
   // 服务的创建者，并加入到全局服务列表中，可用于应用任何部分
   // providers列出会在此模块中“注入”的服务（Service）
