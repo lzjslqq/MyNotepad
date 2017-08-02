@@ -2,6 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+// Imports for loading & configuring the in-memory web api
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryTodoDbService } from './todo/todo-data';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
@@ -23,6 +27,7 @@ import { TodoComponent } from './todo/todo.component';
     // 这个模块所有需要在浏览器中跑的应用都必须引用
     BrowserModule,
     FormsModule,
+    InMemoryWebApiModule.forRoot(InMemoryTodoDbService),
     routing
   ],
   // 服务的创建者，并加入到全局服务列表中，可用于应用任何部分
